@@ -1,5 +1,5 @@
 export default function Cabecalho(props) {
-   // props é somente leitura - alterado
+   // props é somente leitura - alterado 2
 
    return (
       <header>
