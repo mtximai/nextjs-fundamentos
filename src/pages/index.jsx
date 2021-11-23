@@ -1,3 +1,5 @@
+// Curso React + Redux: Fundamentos
+
 import Navegador from '../components/Navegador'
 
 export default function Inicio() {
