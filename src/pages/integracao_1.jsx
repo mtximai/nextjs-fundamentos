@@ -1,3 +1,5 @@
+// curso react aula 99 - consumindo uma api
+
 import {useState} from 'react'
 import Layout from '../components/Layout'
 
@@ -7,12 +9,16 @@ export default function Integracao() {
    const [cliente, setCliente] = useState({})
 
    function obterCliente_v1() {
+
+      // utilizando promise
       fetch(`http://localhost:3000/api/clientes/${codigo}`)
       .then(resp => resp.json())
       .then(dados => setCliente(dados))
    }
    
    async function obterCliente() {
+
+      // chamada "síncrona"
       const resp = await fetch(`http://localhost:3000/api/clientes/${codigo}`)
       const dados = await resp.json()
       setCliente(dados)
@@ -34,6 +40,5 @@ export default function Integracao() {
 
       </Layout>
    )
-
 
 }

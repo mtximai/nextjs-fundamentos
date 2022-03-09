@@ -1,3 +1,5 @@
+// navegação dinâmica - curso react aula 95
+
 import Layout from "../../components/Layout";
 import {useRouter} from 'next/router'
 import {useEffect} from 'react'
@@ -7,11 +9,11 @@ export default function ClientePorCodigo() {
 
    useEffect(() => {
       console.log(router.query.codigo)
-   }, [])
+   }, [router.query.codigo])
 
    return (
       <Layout titulo="Navegação Dinâmica">
-            <span>Código = {router.query.codigo}</span>
+         <span>Código = {router.query.codigo}</span>
       </Layout>
    )
 }

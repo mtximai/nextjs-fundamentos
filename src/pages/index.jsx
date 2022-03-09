@@ -1,4 +1,4 @@
-// Curso React + Redux: Fundamentos
+// Curso React + Redux: Fundamentos (Coder)
 
 import Navegador from '../components/Navegador'
 
@@ -13,6 +13,7 @@ export default function Inicio() {
             height: '100vh'
          }
       }>
+         <Navegador texto="Teste DisplayNumber" destino="/teste" />
          <Navegador texto="Estiloso" destino="/estiloso" />
          <Navegador texto="Exemplo"  destino="/exemplo" cor="crimson" />
          <Navegador texto="Navegação #01"  destino="/navegacao" cor="green" />
