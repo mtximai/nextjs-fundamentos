@@ -69,7 +69,9 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
+
 export default function PersistentDrawerLeft() {
+
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -84,6 +86,7 @@ export default function PersistentDrawerLeft() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
+
       <AppBar position="fixed" open={open}>
         <Toolbar>
           <IconButton
@@ -95,11 +98,13 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
+          
           <Typography variant="h6" noWrap component="div">
             Persistent drawer
           </Typography>
         </Toolbar>
       </AppBar>
+
       <Drawer
         sx={{
           width: drawerWidth,
@@ -118,7 +123,9 @@ export default function PersistentDrawerLeft() {
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
+
         <Divider />
+
         <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>
@@ -129,7 +136,9 @@ export default function PersistentDrawerLeft() {
             </ListItem>
           ))}
         </List>
+
         <Divider />
+
         <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
             <ListItem button key={text}>
@@ -141,8 +150,10 @@ export default function PersistentDrawerLeft() {
           ))}
         </List>
       </Drawer>
+
       <Main open={open}>
         <DrawerHeader />
+
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
@@ -157,6 +168,7 @@ export default function PersistentDrawerLeft() {
           consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
           sapien faucibus et molestie ac.
         </Typography>
+
         <Typography paragraph>
           Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
           eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim

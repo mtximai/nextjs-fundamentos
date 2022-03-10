@@ -43,3 +43,9 @@ Projeto com Next.js
   > yarn add --dev @types/node
 
 
+=> 10/03/22: Passei a utilizar o npm: com o yarn estava dando erro no swc compiler
+
+> npm install @mui/material @emotion/react @emotion/styled @mui/icons-material
+
+
+
