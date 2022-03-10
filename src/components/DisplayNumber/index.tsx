@@ -8,9 +8,11 @@ interface DisplayNumberProps {
 
 export default function DisplayNumber(props: DisplayNumberProps) {
 
+  console.log(props?.numero ?? 99)
+
   return (
     <div className={styles.quadro} >
-      {props.numero}
+      {props?.numero ?? 99}
     </div>
   )
 }

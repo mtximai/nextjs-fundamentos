@@ -1,7 +1,7 @@
 // curso react aula 99 - consumindo uma api
 
 import {useState} from 'react'
-import Layout from '../components/Layout'
+import Layout from '../components/Layout2'
 
 export default function Integracao() {
 

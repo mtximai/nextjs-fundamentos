@@ -1,6 +1,6 @@
 // navegação dinâmica - curso react aula 95
 
-import Layout from "../../components/Layout";
+import Layout from "../../components/Layout2";
 import {useRouter} from 'next/router'
 import {useEffect} from 'react'
 

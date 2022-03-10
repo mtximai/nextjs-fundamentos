@@ -1,3 +1,5 @@
+// Mauro - 10/03/21
+
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -11,18 +13,25 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
+import { useRouter } from 'next/router'
+import styles from '../styles/Layout.module.css'
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Badge from '@mui/material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 
-const drawerWidth = 240;
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
-  open?: boolean;
-}>(({ theme, open }) => ({
+const drawerWidth = 300;
+
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })
+<{ open?: boolean; }>
+
+( ({ theme, open }) => ({
   flexGrow: 1,
   padding: theme.spacing(3),
   transition: theme.transitions.create('margin', {
@@ -70,7 +79,16 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 
-export default function PersistentDrawerLeft() {
+// Componente
+export default function Layout(props) {
+    
+  const children: { children: JSX.Element } = props.children
+  
+  const menuItens: {text: string, icon: any, path: string }[] = props.menuItens
+  
+  const tituloMenu: string = props.titulo ?? 'Título Menu'
+
+  const [titulo, setTitulo] = React.useState('Toolbar')
 
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
@@ -83,11 +101,97 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   };
 
+  const router = useRouter();
+
+  React.useEffect( () => {
+    const item = menuItens.filter((e,i) => e.path == router.pathname)
+
+    if (item.length >0) {
+      setTitulo(item[0].text)
+    }
+
+  }, [router.pathname])
+
+
+  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const menuId = 'primary-search-account-menu';
+
+  const btnToolbar = (
+    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+
+      <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+        <Badge badgeContent={4} color="error">
+          <MailIcon />
+        </Badge>
+      </IconButton>
+
+      <IconButton
+        size="large"
+        aria-label="show 17 new notifications"
+        color="inherit"
+      >
+        <Badge badgeContent={17} color="error">
+          <NotificationsIcon />
+        </Badge>
+      </IconButton>
+
+      <IconButton
+        size="large"
+        edge="end"
+        aria-label="account of current user"
+        aria-controls={menuId}
+        aria-haspopup="true"
+        onClick={handleProfileMenuOpen}
+        color="inherit"
+      >
+        <AccountCircle />
+      </IconButton>
+
+    </Box>
+  )
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const isMenuOpen = Boolean(anchorEl);
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+
+    console.log('Close menu...')
+
+  };
+
+
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+    </Menu>
+  );
+
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
 
       <AppBar position="fixed" open={open}>
+
         <Toolbar>
           <IconButton
             color="inherit"
@@ -100,10 +204,17 @@ export default function PersistentDrawerLeft() {
           </IconButton>
           
           <Typography variant="h6" noWrap component="div">
-            Persistent drawer
+            {titulo}
           </Typography>
+
+          <Box sx={{ flexGrow: 1 }} />
+
+          {btnToolbar}
         </Toolbar>
+
       </AppBar>
+
+      { renderMenu }
 
       <Drawer
         sx={{
@@ -119,70 +230,45 @@ export default function PersistentDrawerLeft() {
         open={open}
       >
         <DrawerHeader>
+          <h3>{tituloMenu}</h3>
+
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            <ChevronLeftIcon />
           </IconButton>
         </DrawerHeader>
 
         <Divider />
 
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+
+          {menuItens.map((e,i) =>
+
+            (e.text !== '-') ?
+
+              <ListItem button
+                key={i}
+                onClick={() => router.push(e.path) }
+                className = { e.path == router.pathname ? styles.active:''}
+              >
+                <ListItemIcon>
+                  {e.icon}
+                </ListItemIcon>
+
+                <ListItemText primary={e.text} />
+              </ListItem>
+              : <Divider key={i} />
+          )}
+
         </List>
 
-        <Divider />
-
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
       </Drawer>
 
       <Main open={open}>
         <DrawerHeader />
 
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-          enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-          Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-          Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-          nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-          leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-          feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-          consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-          sapien faucibus et molestie ac.
-        </Typography>
-
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper
-          eget nulla facilisi etiam dignissim diam. Pulvinar elementum integer enim
-          neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus sed viverra
-          tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis
-          sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi
-          tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit
-          gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-          et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
-          tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
+        { children }
       </Main>
+
     </Box>
   );
 }

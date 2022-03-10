@@ -35,7 +35,7 @@ Projeto com Next.js
   Upgrade React version to latest
   > yarn add react@latest react-dom@latest
 
-4) Instalr a MUI com o Styled Component como 'styling engine'
+4) Instalar a MUI com o Styled Component como 'styling engine'
   
   > yarn add @mui/material @mui/styled-engine-sc styled-components
 
