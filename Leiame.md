@@ -26,3 +26,20 @@ Projeto com Next.js
 
   vide: https://nextjs.org/docs/basic-features/typescript
 
+
+3) Update Next.js version
+  
+  Upgrade Next.js version to 12
+  > yarn add next@12
+
+  Upgrade React version to latest
+  > yarn add react@latest react-dom@latest
+
+4) Instalr a MUI com o Styled Component como 'styling engine'
+  
+  > yarn add @mui/material @mui/styled-engine-sc styled-components
+
+  Ao rodar o sistema pediu para rodar:
+  > yarn add --dev @types/node
+
+
