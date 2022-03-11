@@ -1,0 +1,7 @@
+.principal {
+  display: flex;
+  flex-direction: column;
+  background-color: #aaa;
+  padding: 10px;
+  height: 100vh;
+}

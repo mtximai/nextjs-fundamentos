@@ -16,11 +16,13 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { useRouter } from 'next/router'
+
 import styles from '../styles/Layout.module.css'
+import { useRouter } from 'next/router'
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Badge from '@mui/material/Badge';
+
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -29,45 +31,45 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 const drawerWidth = 300;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })
-<{ open?: boolean; }>
+  <{ open?: boolean; }>
 
-( ({ theme, open }) => ({
-  flexGrow: 1,
-  padding: theme.spacing(3),
-  transition: theme.transitions.create('margin', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  marginLeft: `-${drawerWidth}px`,
-  ...(open && {
+  ( ({ theme, open }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: 0,
-  }),
-}));
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    }),
+  }));
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme, open }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
+    shouldForwardProp: (prop) => prop !== 'open',
+  })<AppBarProps>(({ theme, open }) => ({
     transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
     }),
-  }),
-}));
+    ...(open && {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: `${drawerWidth}px`,
+      transition: theme.transitions.create(['margin', 'width'], {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    }),
+  }));
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -79,8 +81,16 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 
+type myProps = {
+  children: { children: JSX.Element }
+  menuItens: {text: string, icon: any, path: string }[]
+  tituloMenu: string
+  titulo: string
+}
+
+
 // Componente
-export default function Layout(props) {
+export default function Layout(props: myProps) {
     
   const children: { children: JSX.Element } = props.children
   
@@ -110,7 +120,7 @@ export default function Layout(props) {
       setTitulo(item[0].text)
     }
 
-  }, [router.pathname])
+  }, [menuItens, router.pathname])
 
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -158,9 +168,6 @@ export default function Layout(props) {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-
-    console.log('Close menu...')
-
   };
 
 

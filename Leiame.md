@@ -47,5 +47,5 @@ Projeto com Next.js
 
 > npm install @mui/material @emotion/react @emotion/styled @mui/icons-material
 
-
+> npm install @mui/material @mui/styled-engine-sc styled-components
 
