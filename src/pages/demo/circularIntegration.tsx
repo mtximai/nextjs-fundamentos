@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { green } from '@mui/material/colors';
@@ -6,9 +6,15 @@ import Button from '@mui/material/Button';
 import Fab from '@mui/material/Fab';
 import CheckIcon from '@mui/icons-material/Check';
 import SaveIcon from '@mui/icons-material/Save';
+import BtnSpinner from '../../components/BtnSpinner';
+
+import { useLayoutUpdate, iContext } from '../../components/Layout';
 
 
+// component
 export default function CircularIntegration() {
+
+  const ctxLayout = useLayoutUpdate() as iContext
 
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
@@ -23,13 +29,6 @@ export default function CircularIntegration() {
     }),
   };
 
-  React.useEffect(() => {
-    return () => {
-      clearTimeout(timer.current);
-    };
-  }, []);
-
-
   const handleButtonClick = () => {
   
     if (!loading) {
@@ -41,7 +40,9 @@ export default function CircularIntegration() {
                         setLoading(false);
                       }, 2000);
     }
-  };
+
+    ctxLayout.f_qtCorreioUpdate(ctxLayout.qtCorreio + 1);
+  }
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -93,6 +94,16 @@ export default function CircularIntegration() {
             }}
           />
         )}
+      </Box>
+
+      <Box sx={{ m: 1, position: 'relative' }}>
+
+        <BtnSpinner onClick={handleButtonClick} loading={loading} />
+
+        { (p => { return p ? <p>Loading 1...</p> : null })(loading) }
+
+        { loading && <p>Loading 2...</p> }
+
       </Box>
 
     </Box>

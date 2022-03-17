@@ -4,6 +4,9 @@
 // Testar com: http://localhost:3000/api/hello?nome=joao
 //
 export default function handler(req, res) {
+
+  console.log('Onde estou sendo executado?', Date())
+  
   res.status(200).json({
     name: 'Teste API',
     metodo: req.method,

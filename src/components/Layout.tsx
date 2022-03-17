@@ -1,6 +1,6 @@
 // Mauro - 10/03/21
 
-import * as React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -16,23 +16,14 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-
 import styles from '../styles/Layout.module.css'
 import { useRouter } from 'next/router'
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Badge from '@mui/material/Badge';
-
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import MyToolbar, { useCorreioUpdate } from './MyToolbar'
 
 
 const drawerWidth = 300;
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })
-  <{ open?: boolean; }>
-
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{ open?: boolean; }>
   ( ({ theme, open }) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
@@ -54,54 +45,74 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
 
-const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-  })<AppBarProps>(({ theme, open }) => ({
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: `${drawerWidth}px`,
-      transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    }),
-  }));
+const AppBar = styled(MuiAppBar, { shouldForwardProp: (prop) => prop !== 'open', })<AppBarProps>(
+    ({ theme, open }) => (
+      {
+        transition: theme.transitions.create(['margin', 'width'], {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.leavingScreen,
+        }),
+        ...(open && {
+          width: `calc(100% - ${drawerWidth}px)`,
+          marginLeft: `${drawerWidth}px`,
+          transition: theme.transitions.create(['margin', 'width'], {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
+        }),
+      }
+    )
+  );
 
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
-}));
+const DrawerHeader = styled('div')( ({ theme }) => (
+    {
+      display: 'flex',
+      alignItems: 'center',
+      padding: theme.spacing(0, 1),
+      // necessary for content to be below app bar
+      ...theme.mixins.toolbar,
+      justifyContent: 'flex-end',
+    }
+  ));
+  
+export interface iContext {
+  f_drawerTitleUpdate(title: string): void
+  f_qtCorreioUpdate(qtCorreio: number): void
+  f_qtNotificacaoUpdate(qtNotificacao: number): void
+  qtCorreio: number
+  qtNotificacao: number
+}
 
+const LayoutContext = React.createContext()
 
-type myProps = {
+export function useLayoutUpdate() {
+  return useContext(LayoutContext)
+}
+
+interface iProps {
   children: { children: JSX.Element }
   menuItens: {text: string, icon: any, path: string }[]
-  tituloMenu: string
+  tituloDrawer: string
   titulo: string
 }
 
 
-// Componente
-export default function Layout(props: myProps) {
-    
+// Component
+export default function Layout(props: iProps) {
+
+  const [qtCorreio, setQtCorreio] = useState(2)
+  const [qtNotificacao, setQtNotificacao] = useState(3)
+
+  const [tituloDrawer, setTituloDrawer] = useState(props.tituloDrawer ?? 'Título Drawer')
+
   const children: { children: JSX.Element } = props.children
   
   const menuItens: {text: string, icon: any, path: string }[] = props.menuItens
-  
-  const tituloMenu: string = props.titulo ?? 'Título Menu'
 
-  const [titulo, setTitulo] = React.useState('Toolbar')
+  const [titulo, setTitulo] = useState('Toolbar')
 
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -113,169 +124,120 @@ export default function Layout(props: myProps) {
 
   const router = useRouter();
 
-  React.useEffect( () => {
+  useEffect( () => {
     const item = menuItens.filter((e,i) => e.path == router.pathname)
 
     if (item.length >0) {
       setTitulo(item[0].text)
     }
-
   }, [menuItens, router.pathname])
 
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  function f_drawerTitleUpdate(msg: string) {
+    setTituloDrawer(msg)
+  }
 
-  const menuId = 'primary-search-account-menu';
+  function f_qtCorreioUpdate(n: number) {
+    setQtCorreio(n)
+  }
 
-  const btnToolbar = (
-    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+  function f_qtNotificacaoUpdate(n: number) {
+    setQtNotificacao(n)
+  }
 
-      <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-        <Badge badgeContent={4} color="error">
-          <MailIcon />
-        </Badge>
-      </IconButton>
-
-      <IconButton
-        size="large"
-        aria-label="show 17 new notifications"
-        color="inherit"
-      >
-        <Badge badgeContent={17} color="error">
-          <NotificationsIcon />
-        </Badge>
-      </IconButton>
-
-      <IconButton
-        size="large"
-        edge="end"
-        aria-label="account of current user"
-        aria-controls={menuId}
-        aria-haspopup="true"
-        onClick={handleProfileMenuOpen}
-        color="inherit"
-      >
-        <AccountCircle />
-      </IconButton>
-
-    </Box>
-  )
-
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const isMenuOpen = Boolean(anchorEl);
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
-
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
+  const mValue : iContext = {
+    f_drawerTitleUpdate,
+    f_qtCorreioUpdate,
+    f_qtNotificacaoUpdate,
+    qtCorreio,
+    qtNotificacao
+  }
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
+    <LayoutContext.Provider value={mValue}>
 
-      <AppBar position="fixed" open={open}>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
 
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          
-          <Typography variant="h6" noWrap component="div">
-            {titulo}
-          </Typography>
+        <AppBar position="fixed" open={open}>
 
-          <Box sx={{ flexGrow: 1 }} />
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{ mr: 2, ...(open && { display: 'none' }) }}
+            >
+              <MenuIcon />
+            </IconButton>
+            
+            <Typography variant="h6" noWrap component="div">
+              {titulo}
+            </Typography>
 
-          {btnToolbar}
-        </Toolbar>
+            <Box sx={{ flexGrow: 1 }} />
 
-      </AppBar>
+            <MyToolbar qtCorreio={qtCorreio} qtNotificacao={qtNotificacao} />
+          </Toolbar>
 
-      { renderMenu }
+        </AppBar>
 
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
+        <Drawer
+          sx={{
             width: drawerWidth,
-            boxSizing: 'border-box',
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-        <DrawerHeader>
-          <h3>{tituloMenu}</h3>
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+            },
+          }}
+          variant="persistent"
+          anchor="left"
+          open={open}
+        >
+          <DrawerHeader>
+            <h3>{tituloDrawer}</h3>
 
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </DrawerHeader>
 
-        <Divider />
+          <Divider />
 
-        <List>
+          <List>
 
-          {menuItens.map((e,i) =>
+            {menuItens.map((e,i) =>
 
-            (e.text !== '-') ?
+              (e.text !== '-') ?
 
-              <ListItem button
-                key={i}
-                onClick={() => router.push(e.path) }
-                className = { e.path == router.pathname ? styles.active:''}
-              >
-                <ListItemIcon>
-                  {e.icon}
-                </ListItemIcon>
+                <ListItem button
+                  key={i}
+                  onClick={() => router.push(e.path) }
+                  className = { e.path == router.pathname ? styles.active:''}
+                >
+                  <ListItemIcon>
+                    {e.icon}
+                  </ListItemIcon>
 
-                <ListItemText primary={e.text} />
-              </ListItem>
-              : <Divider key={i} />
-          )}
+                  <ListItemText primary={e.text} />
+                </ListItem>
+                : <Divider key={i} />
+            )}
 
-        </List>
+          </List>
 
-      </Drawer>
+        </Drawer>
 
-      <Main open={open}>
-        <DrawerHeader />
+        <Main open={open}>
+          <DrawerHeader />
 
-        { children }
-      </Main>
+          { children }
+        </Main>
 
-    </Box>
+      </Box>
+    </LayoutContext.Provider>
+
   );
 }

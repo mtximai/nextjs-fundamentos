@@ -3,6 +3,7 @@
 import styles from '../styles/Estilos.module.css'
 import { Box, flexbox, styled } from '@mui/system';
 
+
 const MyDiv = styled('div')({
   color: 'darkslategray',
   backgroundColor: 'aliceblue',
@@ -11,6 +12,29 @@ const MyDiv = styled('div')({
   margin:10
 });
 
+const styles2 = {
+  display: 'flex',
+  justifyContent: 'center',
+  backgroundColor: '#238',
+}
+
+// const styles3 = <style jsx>{`
+//   .myStyle {
+//     display: flex;
+//     justifyContent: center;
+//     alignItems: center;
+//     margin: 10px;
+//     background: #ccc;
+//     padding: 30px;
+//     box-shadow: 2px 3px 5px blue;
+//     text-align: center;
+//     max-width: 100px;
+//   }
+// `}</style>
+
+
+
+// component
 export default function Estilos() {
 
   return (
@@ -41,6 +65,15 @@ export default function Estilos() {
           }
         `}</style>
       </div>
+
+      <div style={styles2}>
+        <h3>styles2</h3>
+      </div>
+
+      {/* <div style={styles3}>
+        <h3>styles3</h3>
+      </div> */}
+
 
     </div>
   )

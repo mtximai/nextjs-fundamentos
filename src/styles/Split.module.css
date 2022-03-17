@@ -1,0 +1,24 @@
+.principal {
+  display: flex;
+  flex-direction: column;
+  background-color: #aaa;
+  padding: 10px;
+  height: 100vh;
+}
+
+.flex {
+  display: flex;
+}
+
+.teste1 {
+  background-color:rgb(94, 68, 35);
+}
+
+.teste2 {
+  background-color: lightslategray;
+}
+
+.teste3 {
+  background-color:burlywood;
+}
+

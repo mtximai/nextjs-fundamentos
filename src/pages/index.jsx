@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Navegador from '../components/Navegador'
 import DisplayNumber from "../components/DisplayNumber";
-import BtnProgress from "../components/BtnProgress";
+import BtnSpinner from "../components/BtnSpinner";
 
 
 export default function Inicio() {
@@ -19,8 +19,9 @@ export default function Inicio() {
       }, 2000)
 
    }
-
+  
    return (
+
       <div style={
          {
             display: 'flex',
@@ -54,9 +55,9 @@ export default function Inicio() {
             width: '150px',
             border: "1px solid red"
          }}>
-            <BtnProgress loading={ loading } onClick={ clickPesquisar } text='Processar' />
+            <BtnSpinner loading={ loading } onClick={ clickPesquisar } text='Processar' />
          </div>
-         
+
       </div>
    )
 }

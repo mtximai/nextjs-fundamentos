@@ -49,3 +49,10 @@ Projeto com Next.js
 
 > npm install @mui/material @mui/styled-engine-sc styled-components
 
+
+> npm install react-pdf
+
+> npm i react-split
+  # https://github.com/nathancahill/split
+
+
