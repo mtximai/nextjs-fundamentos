@@ -4,9 +4,14 @@
 
 import React, { useState, useContext } from 'react'
 
-const MyContext = React.createContext()
+interface iContext {
+  msg: string
+  setMsg(msg: string): void
+}
 
-export function f_myContext() {
+const MyContext = React.createContext<iContext>(null)
+
+export function useMyContext() {
   return useContext(MyContext)
 }
 
@@ -14,10 +19,9 @@ export function f_myContext() {
 export function MyProvider({ children }) {
 
   const [msg, setMsg] = useState('mensagem inicial')
-  const [fun, setFun] = useState('')
 
   return (
-    <MyContext.Provider value={{ msg, setMsg, fun, setFun }}>
+    <MyContext.Provider value={{ msg, setMsg }}>
       {children}
     </MyContext.Provider>
   )

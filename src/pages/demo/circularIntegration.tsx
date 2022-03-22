@@ -7,14 +7,11 @@ import Fab from '@mui/material/Fab';
 import CheckIcon from '@mui/icons-material/Check';
 import SaveIcon from '@mui/icons-material/Save';
 import BtnSpinner from '../../components/BtnSpinner';
-
 import { useLayoutUpdate, iContext } from '../../components/Layout';
 
 
 // component
 export default function CircularIntegration() {
-
-  const ctxLayout = useLayoutUpdate() as iContext
 
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
@@ -29,6 +26,9 @@ export default function CircularIntegration() {
     }),
   };
 
+  // Interage com a Toolbar
+  const ctxLayout = useLayoutUpdate() as iContext
+
   const handleButtonClick = () => {
   
     if (!loading) {
@@ -41,8 +41,16 @@ export default function CircularIntegration() {
                       }, 2000);
     }
 
-    ctxLayout.f_qtCorreioUpdate(ctxLayout.qtCorreio + 1);
+    ctxLayout.callbackNotificacao((q,f) => f(q +1))
   }
+
+
+  function f_btnClick() {
+    ctxLayout.callbackCorreio((q: number, f: (arg0: number) => void) => {
+      f(q+3)
+    })
+  }
+
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -98,7 +106,7 @@ export default function CircularIntegration() {
 
       <Box sx={{ m: 1, position: 'relative' }}>
 
-        <BtnSpinner onClick={handleButtonClick} loading={loading} />
+        <BtnSpinner onClick={f_btnClick} loading={loading} />
 
         { (p => { return p ? <p>Loading 1...</p> : null })(loading) }
 

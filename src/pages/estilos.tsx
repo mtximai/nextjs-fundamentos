@@ -33,7 +33,6 @@ const styles2 = {
 // `}</style>
 
 
-
 // component
 export default function Estilos() {
 
