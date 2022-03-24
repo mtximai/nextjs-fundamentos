@@ -113,62 +113,59 @@ export default function VisualizadorAtos<iProps>({ codProtocolo, atos }) {
 
 
   return (
+
+    // <Box sx={{ flexGrow: 1, height:'800px', border:'1px solid red'}}>
+
     <Grid
       container
       direction='column'
-      style={{backgroundColor:'#ccc'}}
       spacing={0}
       margin='0px'
       padding='5px'
       borderRadius='5px'
+      sx={{backgroundColor:'#ccc' }}
     >
-      <Grid
+      {/* <Grid
         item xs={12}
         alignSelf='center'
         style={{backgroundColor:'#ccc', color:'blue'}}
-        padding='0px 20px'
-        borderRadius='5px'
       >
         <Typography fontWeight='bold'>Visualizador de Atos: {codProtocolo}</Typography>
-      </Grid>
+      </Grid> */}
 
       <Grid
         item xs={12}
         padding='5px'
         borderRadius='5px'
-        height='800px'
-        border='1px solid silver'
-        style={{backgroundColor:'#cdcde6'}}
+        // border='1px solid green'
+        sx={{backgroundColor:'#cdcde6'}}
       >
 
         <Split
           sizes={[40,60]}
           minSize={[10,30]}
-          style={{ height: 'calc(100vh - 4rem)', display:'flex' }}
+          style={{ display:'flex'}}
         >
   
-          <div style={{overflow:'auto', padding:'2px'}}>
-            Peças
-
+          <div
+            style={{ overflow:'scroll',}}
+          >
             <TreeView
               aria-label="file system navigator"
               defaultCollapseIcon={<ExpandMoreIcon />}
               defaultExpandIcon={<ChevronRightIcon />}
               sx={{
-                flexGrow: 1,
-                overflowY: 'auto',
-                height: 600,
-                color:'blue',
-
+                color:'blue'
               }}
             >
-              <TreeItem nodeId="0" label={codProtocolo} sx={{fontSize:'8px'}}>
+              <TreeItem nodeId="0" label={codProtocolo} sx={{height:'80vh'}}>
                 { atos && atos.map( (p, i) =>
                   <TreeItem
                     nodeId={`${i+1}`}
                     label={`${p.id} - ${p.nm_peca}`}
                     key={p.id+1}
                     onClick={() => f_itemClick(p.id)}
+                    sx={{}}
                   />
                 )}
               </TreeItem>
@@ -176,11 +173,11 @@ export default function VisualizadorAtos<iProps>({ codProtocolo, atos }) {
 
           </div>
 
-          <div style={{overflow:'auto'}}>
-
-            <iframe src="https://portal.tcm.sp.gov.br/Management/GestaoPublicacao/Documento?id=86618"
-              width="800"
-              height="800"
+          <div style={{ overflow:'scroll' }}>
+            <iframe
+              src="https://portal.tcm.sp.gov.br/Management/GestaoPublicacao/Documento?id=86618"
+              height='99%'
+              width='100%'
             />
 
           </div>
@@ -190,6 +187,8 @@ export default function VisualizadorAtos<iProps>({ codProtocolo, atos }) {
       </Grid>
 
     </Grid>
+
+    //</Box>
 
   )
 }
