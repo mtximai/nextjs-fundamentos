@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <MyProvider>
 
-      <Layout menuItens={menuItens} titulo='Next.js Fundamentos'>
+      <Layout menuItens={menuItens} titulo='Next.js Fundamentos' tituloDrawer='Next.js Fundamentos'>
 
         <Component {...pageProps} />
 
