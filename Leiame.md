@@ -56,10 +56,29 @@ Projeto com Next.js
   # https://github.com/nathancahill/split
 
 
+Gerar container Docker: (14/03/22)
+
+  > docker image build -t mtximai/nextjs-fundamentos:1.0 .
+  > docker image ls
+
+  > docker run -p 3000:3000 -it --name nextjs-fundamentos mtximai/nextjs-fundamentos:1.0
+
+  > docker login --username=mtximai
+  > docker push mtximai/nextjs-fundamentos:1.0
+
+
+
 == 20/03/22
 
 Para instalar o Treeview (em desenvolvimento)
 > npm i @mui/lab
 
+=> 06/04/22
 
+> npm install mssql@latest
 
+> npm install @mui/x-data-grid
+
+DevExtreme (18/04/22)
+> npm install devextreme@21.2 devextreme-react@21.2 --save --save-exact
+> npm install --save exceljs file-saver

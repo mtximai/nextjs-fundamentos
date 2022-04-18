@@ -44,6 +44,9 @@ a {
   cursor: row-resize;
 }
 
+.dx-datagrid {
+  padding:10px;
+}
 
 
 /* .MuiTreeItem-label {
