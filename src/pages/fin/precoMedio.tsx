@@ -20,7 +20,10 @@ import { exportDataGrid } from 'devextreme/excel_exporter';
 
 //import 'devextreme/dist/css/dx.light.css';
 //import 'devextreme/dist/css/dx.dark.css';
-import 'devextreme/dist/css/dx.material.blue.light.compact.css';
+//import 'devextreme/dist/css/dx.material.blue.light.compact.css';
+//import 'devextreme/dist/css/dx.material.teal.light.compact.css';
+import 'devextreme/dist/css/dx.material.purple.light.compact.css';
+
 
 import styles from '../../styles/Estilos.module.css'
 import Box from '@mui/material/Box';
@@ -53,16 +56,17 @@ function exportGrid(e) {
   e.cancel = true; 
 }
 
+// type: 'percent|currency'
 const gdpFormat = {
-  //type: 'percent',
   type: 'currency',
   precision: 2,
 };
 
+const pageSizes = [10, 25, 50, 100];
 
 export default function PrecoMedio() {
 
-  const [timeStamp, setTimeStamp] = useState(Date())
+  const [timeStamp, setTimeStamp] = useState<string>()
   const [dt, setDt] = useState([])
 
   useEffect(() => {
@@ -70,8 +74,6 @@ export default function PrecoMedio() {
               .then((r) => r.json())
               .then((p) => setDt(p))
   }, [timeStamp])
-
-  const pageSizes = [10, 25, 50, 100];
 
   const selectItem = useCallback((e) => {
     e.component.byKey(e.currentSelectedRowKeys[0]).done(p => {
@@ -128,7 +130,7 @@ export default function PrecoMedio() {
           <Column caption='Ticker'   dataField="ticker" dataType="string" width={100} />
           <Column caption='Qtd'      dataField="qtd"    dataType="number" format="#,###"  width={100} />
           <Column caption='Vl.Médio' dataField="vl_medio" dataType="number" format="###,###.00"  width={100} />
-          <Column caption='Qt.Compras' dataField="qt_compra"    dataType="number" format={gdpFormat}  width={100} />
+          <Column caption='Qt.Compras' dataField="qt_compra"    dataType="number" format="#,###"  width={100} />
 
           <Column type="buttons" width={110}>
             <Button name="edit" />

@@ -63,7 +63,7 @@ export default function Compra(props) {
   useEffect(() => {
     setLista(d)
     //console.log('---', d)
-  }, [])
+  }, [d])
 
   function f_click() {
     console.log('click ...')

@@ -9,7 +9,7 @@ const pipeline = promisify(stream.pipeline);
 const sql = require('mssql')
 
 const config = {
-  server: 'localhost',
+  server: '192.168.0.6',
   port: 1433,
   user: 'sa1',
   password: 'sa2',

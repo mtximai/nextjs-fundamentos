@@ -44,6 +44,8 @@ a {
   cursor: row-resize;
 }
 
+
+/* Deve ser removido!!! */
 .dx-datagrid {
   padding:10px;
 }
