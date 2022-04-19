@@ -4,12 +4,14 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import stream from 'stream';
 import { promisify } from 'util';
 
+const mEtcm = process.env.NEXT_PUBLIC_ETCM_URL
+
 const pipeline = promisify(stream.pipeline);
 
 const sql = require('mssql')
 
 const config = {
-  server: '192.168.0.6',
+  server: '10.20.1.73',
   port: 1433,
   user: 'sa1',
   password: 'sa2',

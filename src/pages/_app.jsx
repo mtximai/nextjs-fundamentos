@@ -17,6 +17,7 @@ const menuItens = [
   {text: 'Primary Search App Bar' , icon: <InboxIcon />, path: '/demo/primarySearchAppBar' },
   {text: 'Circular Integration', icon: <MailIcon /> , path: '/demo/circularIntegration' },
   {text: 'Split', icon: <MailIcon /> , path: '/split1' },
+  {text: 'Preço Médio', icon: <MailIcon /> , path: '/fin/precoMedio' },
 ]
 
 
