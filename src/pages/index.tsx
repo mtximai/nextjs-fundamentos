@@ -119,22 +119,47 @@ export default function InteractiveList() {
 
           <Grid item xs={12} md={6}>
             <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-              Icon with text
+              Investimentos e Finanças
             </Typography>
 
             <Demo>
               <List dense={dense}>
-                {generate(
                   <ListItem>
-                    <ListItemIcon>
-                      <FolderIcon />
-                    </ListItemIcon>
+                    <ListItemIcon> <FolderIcon /> </ListItemIcon>
                     <ListItemText
-                      primary="Single-line item"
-                      secondary={secondary ? 'Secondary text' : null}
+                      primary="Consulta compras de ativos"
+                      onClick={ () => router.push('/fin/compras') }
+                      sx={{cursor:'pointer'}}
                     />
-                  </ListItem>,
-                )}
+                  </ListItem>
+
+                  <ListItem>
+                    <ListItemIcon> <FolderIcon /> </ListItemIcon>
+                    <ListItemText
+                      primary="Consulta preço médio"
+                      onClick={ () => router.push('/fin/precoMedio') }
+                      sx={{cursor:'pointer'}}
+                    />
+                  </ListItem>
+
+                  <ListItem>
+                    <ListItemIcon> <FolderIcon /> </ListItemIcon>
+                    <ListItemText
+                      primary="Rendimentos"
+                      onClick={ () => router.push('/fin/rendimentos') }
+                      sx={{cursor:'pointer'}}
+                    />
+                  </ListItem>
+
+                  <ListItem>
+                    <ListItemIcon> <FolderIcon /> </ListItemIcon>
+                    <ListItemText
+                      primary="Incluir compra de ativo"
+                      onClick={ () => router.push('/fin/incluirCompra') }
+                      sx={{cursor:'pointer'}}
+                    />
+                  </ListItem>
+
               </List>
             </Demo>
           </Grid>
