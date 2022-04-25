@@ -60,7 +60,7 @@ interface iDados {
 }
 
 
-export default function Rendimento(props) {
+export default function Rendimentos(props) {
 
   console.log('inicio...')
 

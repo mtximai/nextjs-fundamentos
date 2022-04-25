@@ -82,3 +82,10 @@ Para instalar o Treeview (em desenvolvimento)
 DevExtreme (18/04/22)
 > npm install devextreme@21.2 devextreme-react@21.2 --save --save-exact
 > npm install --save exceljs file-saver
+
+= 21/04/22
+https://www.npmjs.com/package/react-imask
+https://imask.js.org/guide.html
+
+npm i react-imask
+npm i react-number-format@latest

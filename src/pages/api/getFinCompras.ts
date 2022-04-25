@@ -28,11 +28,8 @@ const config = {
 }
 
 const s = `
-select id=ROW_NUMBER() OVER(ORDER BY ticker asc),
-ticker, qtd=sum(qtd), vl_total=sum(vl_total), vl_medio=round(sum(vl_total)/sum(qtd),2), qt_compra=count(*)
-from compra
-group by ticker
-order by 1
+select * from compra
+order by dt_compra,ticker
 `;
 
 
@@ -43,8 +40,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     let pool = await sql.connect(config)
   
-    let r = await pool.request()
-              .query(s)
+    let r = await pool.request().query(s)
 
     lista = r.recordset
     rs = JSON.stringify(lista)
