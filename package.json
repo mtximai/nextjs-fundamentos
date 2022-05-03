@@ -27,7 +27,7 @@
     "react-dom": "17.0.2",
     "react-draggable": "^4.4.4",
     "react-imask": "^6.4.2",
-    "react-number-format": "^4.9.1",
+    "react-number-format": "^4.9.3",
     "react-pdf": "^5.7.1",
     "react-split": "^2.0.14",
     "styled-components": "^5.3.3"
